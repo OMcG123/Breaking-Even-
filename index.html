@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listen & Learn</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f5f9;
+  color: #202b3c;
+}
+header {
+  background: #172b4d;
+  color: white;
+  text-align: center;
+  padding: 42px 20px;
+}
+header h1 { font-size: 34px; margin: 0 0 10px; }
+main { max-width: 760px; margin: 30px auto; padding: 0 16px; }
+section {
+  background: white;
+  padding: 24px;
+  margin-bottom: 20px;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px #0000000c;
+}
+h2 { color: #172b4d; margin-top: 0; }
+audio { width: 100%; margin-top: 12px; }
+.question { border-top: 1px solid #e5e8ee; padding: 15px 0; }
+.option {
+  display: block;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #d9dfeb;
+  border-radius: 8px;
+}
+button {
+  background: #2457a7;
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin: 8px 5px 0 0;
+  font-size: 16px;
+}
+#result { font-weight: bold; font-size: 19px; }
+footer { text-align: center; padding: 25px; color: #687386; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Listen & Learn</h1>
+  <p>Listen to podcasts and test your knowledge.</p>
+</header>
+
+<main>
+<section>
+  <h2>Welcome!</h2>
+  <p>Welcome to Listen & Learn. Choose an episode,
+  listen carefully and complete the quiz afterwards.</p>
+</section>
+
+<section>
+  <h2>Episode 1: Introduction</h2>
+  <p>Listen to the recording before starting the quiz.</p>
+  <audio controls>
+    <source src="episode-1.mp3" type="audio/mpeg">
+    Your browser does not support audio playback.
+  </audio>
+</section>
+
+<section>
+  <h2>Episode 1 Quiz</h2>
+  <p>Choose one answer for each question.</p>
+
+  <form id="quiz">
+    <div class="question">
+      <p><strong>1. What is the main subject of the episode?</strong></p>
+      <label class="option"><input type="radio" name="q1" value="a"> History</label>
+      <label class="option"><input type="radio" name="q1" value="b"> Science</label>
+      <label class="option"><input type="radio" name="q1" value="c"> Technology</label>
+    </div>
+
+    <div class="question">
+      <p><strong>2. What should listeners do after listening?</strong></p>
+      <label class="option"><input type="radio" name="q2" value="a"> Complete the quiz</label>
+      <label class="option"><input type="radio" name="q2" value="b"> Close the website</label>
+      <label class="option"><input type="radio" name="q2" value="c"> Download an app</label>
+    </div>
+
+    <div class="question">
+      <p><strong>3. How many episodes are available in this example?</strong></p>
+      <label class="option"><input type="radio" name="q3" value="a"> One</label>
+      <label class="option"><input type="radio" name="q3" value="b"> Five</label>
+      <label class="option"><input type="radio" name="q3" value="c"> Ten</label>
+    </div>
+
+    <button type="submit">Submit answers</button>
+    <button type="reset">Try again</button>
+  </form>
+
+  <p id="result" aria-live="polite"></p>
+</section>
+</main>
+
+<footer>Listen & Learn — Educational Project</footer>
+
+<script>
+const answers = {
+  q1: "c",
+  q2: "a",
+  q3: "a"
+};
+
+const quiz = document.getElementById("quiz");
+const result = document.getElementById("result");
+
+quiz.addEventListener("submit", function(event) {
+  event.preventDefault();
+  let score = 0;
+  const total = Object.keys(answers).length;
+
+  for (const question in answers) {
+    const selected = quiz.querySelector(
+      `input[name="${question}"]:checked`
+    );
+    if (selected && selected.value === answers[question]) {
+      score++;
+    }
+  }
+
+  result.textContent = `You scored ${score} out of ${total}!`;
+});
+
+quiz.addEventListener("reset", function() {
+  result.textContent = "";
+});
+</script>
+
+</body>
+</html>
